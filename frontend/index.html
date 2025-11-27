@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cotação de Moedas</title>
+
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <header><b>Coin Flux:</b> Consulta de Cotação - Moedas x Real (BRL)</header>
+
+  <div class="container">
+
+    <div class="input-group">
+      <select id="moedaSelect">
+        <option value="USD">USD - Dólar Americano</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - Libra Esterlina</option>
+        <option value="ARS">ARS - Peso Argentino</option>
+        <option value="JPY">JPY - Iene Japonês</option>
+        <option value="CNY">CNY - Yuan Chinês</option>
+      </select>
+
+      <input id="valorInput" type="number" placeholder="Valor na moeda escolhida" />
+    </div>
+
+    <!-- Botão de consulta -->
+    <button id="btnConsultar">Consultar Cotação</button>
+
+    <div id="resultado" class="resultado"></div>
+
+    <!-- Área do gráfico -->
+    <div id="graficoContainer">
+      <canvas id="currencyChart"></canvas>
+    </div>
+
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- JS externo -->
+  <script src="script.js"></script>
+</body>
+</html>
