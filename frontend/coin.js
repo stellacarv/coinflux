@@ -81,8 +81,8 @@ document.getElementById("btnConsultar").addEventListener("click", () => {
   consultar();
 });
 
-// Gráfico carrega automaticamente ao abrir a página
-window.addEventListener("DOMContentLoaded", () => {
-  const moeda = document.getElementById("moedaSelect").value;
-  updateChart(moeda);
+// Atualiza gráfico quando o select de moeda mudar
+document.getElementById("moedaSelect").addEventListener("change", (e) => {
+  updateChart(e.target.value);
 });
+
