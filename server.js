@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.AWESOME_TOKEN || '';
 
-app.use(cors()); // opcional, útil se frontend for servido por outro host/porta
+app.use(cors());
 app.use(express.static('frontend'));
 
 if (!TOKEN) console.warn('AWESOME_TOKEN não definido em .env — chamadas sem token podem falhar.');
@@ -17,6 +17,7 @@ app.get('/api/last/:pairs', async (req, res) => {
     const pairs = req.params.pairs;
     console.log('Proxy request for:', pairs);
     const url = `https://economia.awesomeapi.com.br/json/last/${pairs}${TOKEN ? `?token=${TOKEN}` : ''}`;
+
     const r = await fetch(url);
     const text = await r.text();
 
@@ -26,7 +27,22 @@ app.get('/api/last/:pairs', async (req, res) => {
     }
 
     const json = JSON.parse(text);
-    res.json(json);
+
+    // Normaliza chaves sem hífen (ex: "USDBRL") para o formato esperado pelo frontend ("USD-BRL")
+    const normalized = {};
+    Object.keys(json).forEach(key => {
+      if (key.includes('-')) {
+        normalized[key] = json[key];
+      } else if (key.length > 3) {
+        // divide em prefixo (tudo menos os últimos 3 chars) + "-" + últimos 3 chars
+        const newKey = key.slice(0, -3) + '-' + key.slice(-3);
+        normalized[newKey] = json[key];
+      } else {
+        normalized[key] = json[key];
+      }
+    });
+
+    res.json(normalized);
   } catch (err) {
     console.error('Proxy error:', err);
     res.status(500).json({ error: err.message });

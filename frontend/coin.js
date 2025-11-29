@@ -13,16 +13,30 @@ async function consultar() {
   }
 
   try {
-    // chama o proxy local que aponta para economia.awesomeapi.com.br
     const url = `/api/last/${moeda}-BRL`;
-    const dados = await fetch(url).then(r => r.json());
+    console.log('Chamando proxy:', url);
+    const resp = await fetch(url);
 
-    const cotacao = Number(dados[`${moeda}-BRL`].bid);
+    if (!resp.ok) {
+      const text = await resp.text();
+      console.error('Erro do proxy:', resp.status, text);
+      throw new Error(`Proxy HTTP ${resp.status}`);
+    }
+
+    const dados = await resp.json();
+    const key = `${moeda}-BRL`;
+    if (!dados[key]) {
+      console.error('Resposta inesperada da API:', dados);
+      throw new Error('Resposta sem chave esperada');
+    }
+
+    const cotacao = Number(dados[key].bid);
     const convertido = (valor * cotacao).toFixed(2);
 
     box.style.display = "block";
     box.innerHTML = `💱 ${valor} ${moeda} equivale a <strong>R$ ${convertido}</strong> (BRL)`;
   } catch (e) {
+    console.error('Erro consultar():', e);
     box.style.display = "block";
     box.innerHTML = "Erro ao buscar cotação. Tente novamente.";
   }
