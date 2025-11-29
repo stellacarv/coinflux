@@ -13,21 +13,23 @@ async function consultar() {
   }
 
   try {
-    const url = `/api/last/${moeda}-BRL`;
-    console.log('Chamando proxy:', url);
+    // URL completa da AwesomeAPI (sem proxy)
+    const url = `https://economia.awesomeapi.com.br/json/last/${moeda}-BRL`;
+    console.log('Chamando API:', url);
     const resp = await fetch(url);
 
     if (!resp.ok) {
       const text = await resp.text();
-      console.error('Erro do proxy:', resp.status, text);
-      throw new Error(`Proxy HTTP ${resp.status}`);
+      console.error('Erro da API:', resp.status, text);
+      throw new Error(`HTTP ${resp.status}`);
     }
 
     const dados = await resp.json();
-    const key = `${moeda}-BRL`;
+    const key = `${moeda}BRL`; // AwesomeAPI retorna sem hífen: "USDBRL"
+    
     if (!dados[key]) {
-      console.error('Resposta inesperada da API:', dados);
-      throw new Error('Resposta sem chave esperada');
+      console.error('Resposta inesperada:', dados);
+      throw new Error('Chave não encontrada');
     }
 
     const cotacao = Number(dados[key].bid);
