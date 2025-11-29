@@ -13,10 +13,11 @@ async function consultar() {
   }
 
   try {
-    const url = `https://api.exchangerate-api.com/v4/latest/${moeda}`;
+    // chama o proxy local que aponta para economia.awesomeapi.com.br
+    const url = `/api/last/${moeda}-BRL`;
     const dados = await fetch(url).then(r => r.json());
 
-    const cotacao = dados.rates["BRL"];
+    const cotacao = Number(dados[`${moeda}-BRL`].bid);
     const convertido = (valor * cotacao).toFixed(2);
 
     box.style.display = "block";
@@ -81,8 +82,8 @@ document.getElementById("btnConsultar").addEventListener("click", () => {
   consultar();
 });
 
-// Atualiza gráfico quando o select de moeda mudar
-document.getElementById("moedaSelect").addEventListener("change", (e) => {
-  updateChart(e.target.value);
+// Gráfico carrega automaticamente ao abrir a página
+window.addEventListener("DOMContentLoaded", () => {
+  const moeda = document.getElementById("moedaSelect").value;
+  updateChart(moeda);
 });
-
