@@ -25,7 +25,7 @@ app.get('/api/last/:pairs', async (req, res) => {
       console.error('AwesomeAPI error', r.status, text);
       return res.status(r.status).send(text);
     }
-
+ 
     const json = JSON.parse(text);
 
     // Normaliza chaves sem hífen (ex: "USDBRL") para o formato esperado pelo frontend ("USD-BRL")

@@ -41,7 +41,7 @@ async function consultar() {
     box.innerHTML = "Erro ao buscar cotação. Tente novamente.";
   }
 }
-
+ 
 // Obtém histórico dos últimos 30 dias
 async function getCurrencyHistory(currency) {
   const url = `https://economia.awesomeapi.com.br/json/daily/${currency}-BRL/30`;
@@ -95,6 +95,15 @@ async function updateChart(currency) {
 document.getElementById("btnConsultar").addEventListener("click", () => {
   consultar();
 });
+
+function debounce(fn, ms = 200){
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+document.getElementById("moedaSelect").addEventListener("change", debounce((e) => {
+  updateChart(e.target.value);
+}, 250));
 
 // Gráfico carrega automaticamente ao abrir a página
 window.addEventListener("DOMContentLoaded", () => {
