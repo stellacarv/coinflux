@@ -3,39 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cotação de Moedas</title>
-
+  <title>Coin Flux - Cotação de Moedas</title>
 
   <!-- CSS externo -->
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+  
+<header class="nav-bar">
 
-  <header><b>Coin Flux:</b> Consulta de Cotação - Moedas x Real (BRL)</header>
+  <!-- LOGO -->
+  <div class="logo">
+    <span>Coin</span> Flux
+  </div>
+
+  <!-- BARRA DE PESQUISA -->
+  <div class="search-box">
+    <input type="text" placeholder="Pesquisar cotação..." />
+    <i class="search-icon">🔍</i>
+  </div>
+
+  <!-- MENU HAMBURGUER -->
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- MENU LATERAL -->
+  <nav class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="index.html">🏠 Início</a></li>
+      <li><a href="converter.html">💱 Conversor</a></li>
+      <li><a href="historico.html">📊 Histórico</a></li>
+    </ul>
+  </nav>
+
+</header>
+
+
 
   <div class="container">
 
-    <div class="input-group">
-      <select id="moedaSelect">
-        <option value="USD">USD - Dólar Americano</option>
-        <option value="EUR">EUR - Euro</option>
-        <option value="GBP">GBP - Libra Esterlina</option>
-        <option value="ARS">ARS - Peso Argentino</option>
-        <option value="JPY">JPY - Iene Japonês</option>
-        <option value="CNY">CNY - Yuan Chinês</option>
-      </select>
+    <div class="card">
 
-      <input id="valorInput" type="number" placeholder="Valor na moeda escolhida" />
-    </div>
+      <div class="input-group">
+        <select id="moedaSelect" class="input">
+          <option value="USD">USD - Dólar Americano</option>
+          <option value="EUR">EUR - Euro</option>
+          <option value="GBP">GBP - Libra Esterlina</option>
+          <option value="ARS">ARS - Peso Argentino</option>
+          <option value="JPY">JPY - Iene Japonês</option>
+          <option value="CNY">CNY - Yuan Chinês</option>
+        </select>
 
-    <!-- Botão de consulta -->
-    <button id="btnConsultar">Consultar Cotação</button>
+        <input id="valorInput" type="number" placeholder="Valor na moeda escolhida" class="input"/>
+      </div>
 
-    <div id="resultado" class="resultado"></div>
+      <button id="btnConsultar" class="btn">Consultar Cotação</button>
 
-    <!-- Área do gráfico -->
-    <div id="graficoContainer">
-      <canvas id="currencyChart"></canvas>
+      <div id="resultado" class="resultado"></div>
+
+      <div id="graficoContainer" class="grafico">
+        <canvas id="currencyChart"></canvas>
+      </div>
+
     </div>
 
   </div>

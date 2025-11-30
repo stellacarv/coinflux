@@ -1,106 +1,369 @@
-/* ----- ESTILOS GERAIS ----- */
-body {
+/* ========================= */
+/* CONFIGURAÇÕES GERAIS      */
+/* ========================= */
+
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Inter", Arial, sans-serif;
-  background: linear-gradient(#75fdff, #1be680);
-  color: #222;
 }
 
-/* ----- CABEÇALHO ----- */
-header {
-  background: #1be680;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  padding: 25px;
+body {
+  background: linear-gradient(to bottom, #38ef7d, #11998e);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ========================= */
+/* HEADER FIXO               */
+/* ========================= */
+
+.nav-bar {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+
+/* LOGO */
+.logo {
   font-size: 30px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  font-weight: 800;
+  color: white;
+  user-select: none;
+}
+.logo span {
+  color: #afffff;
 }
 
-/* ----- CONTAINER PRINCIPAL ----- */
-.container {
-  width: 90%;
-  max-width: 900px;
-  margin: 40px auto;
-  background: #000000;
-  padding: 35px;
+/* BARRA DE PESQUISA */
+.search-box {
+  flex: 0 0 350px;
+  max-width: 350px;
+  position: relative;
+  z-index: 5;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 45px 12px 16px;
   border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  animation: fadeIn 0.4s ease;
+  border: none;
+  font-size: 16px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  outline: none;
 }
 
-/* ----- GRUPO DE CAMPOS ----- */
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+/* MENU HAMBÚRGUER */
+.hamburger {
+  width: 35px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+  background: transparent;
+  z-index: 9999;  /* garante clique */
+  position: relative;
+}
+
+.hamburger span {
+  height: 4px;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+/* ========================= */
+/* MENU LATERAL              */
+/* ========================= */
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 280px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.25);
+  padding-top: 100px;
+  transition: right 0.4s ease;
+  z-index: 9000;
+}
+
+.side-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.side-menu li {
+  padding: 20px 30px;
+  font-size: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.side-menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+/* ========================= */
+/* AJUSTE DO CONTEÚDO        */
+/* ========================= */
+
+.container {
+  width: 95%;
+  max-width: 850px;
+  padding: 30px;
+  margin-top: 140px !important; /* evita que o header cubra o conteúdo */
+}
+
+/* ========================= */
+/* CARD CENTRAL              */
+/* ========================= */
+
+.card {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  animation: fadeIn 0.8s ease;
+}
+
+/* ========================= */
+/* INPUTS                    */
+/* ========================= */
+
 .input-group {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
 }
 
-select,
-input {
+.input {
   flex: 1;
-  padding: 14px;
+  padding: 14px 16px;
   border-radius: 10px;
-  border: 1px solid #c8d3dd;
-  font-size: 17px;
-  background: #f9fbfc;
-  transition: 0.2s;
+  border: 2px solid #dcdcdc;
+  outline: none;
+  font-size: 15px;
+  transition: 0.25s;
 }
 
-select:focus,
-input:focus {
-  border-color: #75fdff;
-  box-shadow: 0 0 6px #75fdff;
+.input:focus {
+  border-color: #38ef7d;
+  box-shadow: 0 0 10px rgba(56,239,125,0.4);
 }
 
-/* ----- BOTÃO ----- */
-button {
+/* ========================= */
+/* BOTÃO                     */
+/* ========================= */
+
+.btn {
+  margin-top: 25px;
   width: 100%;
-  background:  #1be680;
-  color: white;
-  padding: 16px;
+  padding: 14px;
+  background: #38ef7d;
+  color: #fff;
+  font-size: 18px;
   border: none;
-  border-radius: 10px;
-  font-size: 20px;
-  font-weight: bold;
+  border-radius: 12px;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  background: #75fdff;
-}
-
-/* ----- RESULTADO ----- */
-.resultado {
-  display: none;
-  margin-top: 30px;
-  font-size: 24px;
-  text-align: center;
-  background: #e8f7ff;
-  padding: 25px;
-  border-radius: 10px;
-  border: 1px solid #bce6ff;
+  transition: 0.25s;
   font-weight: 600;
-  animation: fadeIn 0.5s ease;
 }
 
-/* ----- ANIMAÇÃO ----- */
+.btn:hover {
+  background: #32d36d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* ========================= */
+/* RESULTADO                 */
+/* ========================= */
+
+.resultado {
+  margin-top: 25px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #222;
+  padding: 15px;
+  background: #f8f8f8;
+  border-left: 5px solid #38ef7d;
+  border-radius: 10px;
+  display: none;
+}
+
+/* ========================= */
+/* GRÁFICO                   */
+/* ========================= */
+
+.grafico {
+  margin-top: 35px;
+}
+
+/* ========================= */
+/* ANIMAÇÃO                  */
+/* ========================= */
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ----- GRÁFICO ----- */
-#graficoContainer {
-    width: 100%;
-    height: 400px; /* ALTURA OBRIGATÓRIA */
-    margin-top: 30px;
+/* ========================= */
+/* RESPONSIVO                */
+/* ========================= */
+
+@media (max-width: 700px) {
+  .search-box {
+    display: none;
+  }
 }
 
-#currencyChart {
-    width: 100% !important;
-    height: 100% !important;
+/* ========================= */
+/* HEADER FIXO               */
+/* ========================= */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  z-index: 9999; /* garante que o header fique acima de tudo */
+}
+
+/* LOGO */
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+  user-select: none;
+}
+.logo span {
+  color: #afffff;
+}
+
+/* BARRA DE PESQUISA */
+.search-box {
+  flex: 0 0 350px;
+  max-width: 350px;
+  position: relative;
+  z-index: 2; /* menor que hamburger */
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 45px 12px 16px;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+/* MENU HAMBÚRGUER */
+.hamburger {
+  position: relative;           /* essencial para z-index */
+  z-index: 10000;               /* acima de tudo */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 35px;
+  height: 28px;
+  background: transparent;
+  border: none;
+}
+
+.hamburger span {
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+/* ========================= */
+/* MENU LATERAL              */
+/* ========================= */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 280px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.25);
+  padding-top: 100px;
+  transition: right 0.4s ease;
+  z-index: 9998; /* abaixo do hamburger */
+}
+
+.side-menu.open {
+  right: 0;
+}
+
+.side-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.side-menu li {
+  padding: 20px 30px;
+  font-size: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.side-menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
 }

@@ -86,3 +86,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const moeda = document.getElementById("moedaSelect").value;
   updateChart(moeda);
 });
+
+function toggleMenu() {
+  const menu = document.getElementById("sideMenu");
+  menu.classList.toggle("open");
+}
