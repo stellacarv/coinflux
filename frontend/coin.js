@@ -13,20 +13,37 @@ async function consultar() {
   }
 
   try {
-    const url = `https://api.exchangerate-api.com/v4/latest/${moeda}`;
-    const dados = await fetch(url).then(r => r.json());
+    // URL completa da AwesomeAPI (sem proxy)
+    const url = `https://economia.awesomeapi.com.br/json/last/${moeda}-BRL`;
+    console.log('Chamando API:', url);
+    const resp = await fetch(url);
 
-    const cotacao = dados.rates["BRL"];
+    if (!resp.ok) {
+      const text = await resp.text();
+      console.error('Erro da API:', resp.status, text);
+      throw new Error(`HTTP ${resp.status}`);
+    }
+
+    const dados = await resp.json();
+    const key = `${moeda}BRL`; // AwesomeAPI retorna sem hífen: "USDBRL"
+    
+    if (!dados[key]) {
+      console.error('Resposta inesperada:', dados);
+      throw new Error('Chave não encontrada');
+    }
+
+    const cotacao = Number(dados[key].bid);
     const convertido = (valor * cotacao).toFixed(2);
 
     box.style.display = "block";
     box.innerHTML = `💱 ${valor} ${moeda} equivale a <strong>R$ ${convertido}</strong> (BRL)`;
   } catch (e) {
+    console.error('Erro consultar():', e);
     box.style.display = "block";
     box.innerHTML = "Erro ao buscar cotação. Tente novamente.";
   }
 }
-
+ 
 // Obtém histórico dos últimos 30 dias
 async function getCurrencyHistory(currency) {
   const url = `https://economia.awesomeapi.com.br/json/daily/${currency}-BRL/30`;
@@ -80,6 +97,15 @@ async function updateChart(currency) {
 document.getElementById("btnConsultar").addEventListener("click", () => {
   consultar();
 });
+
+function debounce(fn, ms = 200){
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+document.getElementById("moedaSelect").addEventListener("change", debounce((e) => {
+  updateChart(e.target.value);
+}, 250));
 
 // Gráfico carrega automaticamente ao abrir a página
 window.addEventListener("DOMContentLoaded", () => {
