@@ -3,47 +3,42 @@
 <head> 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coin Flux - Cotação de Moedas</title>
-
-  <!-- CSS externo -->
+  <title>Cotação de Moedas</title>
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   
 <header class="nav-bar">
-
-  <!-- LOGO -->
   <div class="logo">
     <span>Coin</span> Flux
   </div>
 
-  <!-- BARRA DE PESQUISA -->
   <div class="search-box">
-    <input type="text" placeholder="Pesquisar cotação..." />
+    <input type="text" id="searchInput" placeholder="Pesquisar cotação..." />
     <i class="search-icon">🔍</i>
+    <div id="searchResults" class="search-results"></div>
   </div>
 
-  <!-- MENU HAMBURGUER -->
   <button class="hamburger" onclick="toggleMenu()">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
-  <!-- MENU LATERAL -->
   <nav class="side-menu" id="sideMenu">
     <ul>
       <li><a href="index.html">🏠 Início</a></li>
-      <li><a href="converter.html">💱 Conversor</a></li>
       <li><a href="historico.html">📊 Histórico</a></li>
     </ul>
   </nav>
-
 </header>
 
-
-
   <div class="container">
+
+    <!-- GRID DE MOEDAS EM TEMPO REAL -->
+    <h2>Cotações em Tempo Real</h2>
+    <div id="currenciesGrid" class="currencies-grid"></div>
 
     <div class="card">
 
@@ -55,6 +50,12 @@
           <option value="ARS">ARS - Peso Argentino</option>
           <option value="JPY">JPY - Iene Japonês</option>
           <option value="CNY">CNY - Yuan Chinês</option>
+          <option value="CAD">CAD - Dólar Canadense</option>
+          <option value="AUD">AUD - Dólar Australiano</option>
+          <option value="CHF">CHF - Franco Suíço</option>
+          <option value="SEK">SEK - Coroa Sueca</option>
+          <option value="NZD">NZD - Dólar Neozelandês</option>
+          <option value="MXN">MXN - Peso Mexicano</option>
         </select>
 
         <input id="valorInput" type="number" placeholder="Valor na moeda escolhida" class="input"/>
@@ -72,11 +73,89 @@
 
   </div>
 
-  <!-- Chart.js - usar caminho com versão para evitar .map 404 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-  <!-- JS externo -->
-<!-- <script src="script.js"></script> -->
   <script src="coin.js"></script>
+
+  <!-- Função de pesquisa na barra -->
+  <script>
+    // Busca moedas disponíveis
+const moedas = {
+  'USD': 'Dólar Americano',
+  'EUR': 'Euro',
+  'GBP': 'Libra Esterlina',
+  'ARS': 'Peso Argentino',
+  'JPY': 'Iene Japonês',
+  'CNY': 'Yuan Chinês'
+};
+
+// Função de busca com sugestões
+function searchCurrency() {
+  const searchInput = document.getElementById('searchInput');
+  const resultsDiv = document.getElementById('searchResults');
+  const searchTerm = searchInput.value.toLowerCase();
+
+  if (!searchTerm) {
+    resultsDiv.innerHTML = '';
+    return;
+  }
+
+  const resultados = Object.entries(moedas).filter(([code, name]) => 
+    code.toLowerCase().includes(searchTerm) || name.toLowerCase().includes(searchTerm)
+  );
+
+  resultsDiv.innerHTML = resultados.map(([code, name]) => `
+    <div class="search-result-item" onclick="selectCurrency('${code}')">
+      <strong>${code}</strong> - ${name}
+    </div>
+  `).join('');
+}
+
+function selectCurrency(code) {
+  document.getElementById('moedaSelect').value = code;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchResults').innerHTML = '';
+  updateChart(code);
+}
+
+// Listener para a barra de pesquisa
+document.getElementById('searchInput').addEventListener('input', debounce(searchCurrency, 200));
+
+// Fecha resultados ao clicar fora
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-box')) {
+    document.getElementById('searchResults').innerHTML = '';
+  }
+});
+  </script>
 </body>
 </html>
+
+<style>
+/* ...existing styles... */
+
+/* Resultados de busca */
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-result-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.search-result-item:hover {
+  background: #f5f5f5;
+}
+
+/* ...existing styles... */
+</style>
