@@ -1,65 +1,78 @@
 # 🪙 CoinFlux
 
-> **Monitoramento de Câmbio Full Stack (Node.js + Vanilla JS)**
+> **Monitoramento de Câmbio Full Stack (Node.js + MongoDB + Vanilla JS)**
 
-O **CoinFlux** é uma aplicação web interativa para consulta de cotações de moedas globais em relação ao Real Brasileiro (BRL) em tempo real.
+O **CoinFlux** é uma aplicação web completa para consulta de cotações de moedas em tempo real e gerenciamento de histórico de conversões.
 
-O diferencial deste projeto é sua arquitetura **Full Stack**. Diferente de simples páginas estáticas, o CoinFlux utiliza um servidor **Node.js** atuando como **Proxy API**. Isso garante segurança (ocultando chaves de API), resolve limitações de CORS e normaliza os dados antes de entregá-los ao Frontend.
+O projeto utiliza uma arquitetura **BFF (Backend for Frontend)** simplificada, onde um servidor Node.js atua como proxy seguro entre o cliente e a API externa, além de gerenciar a persistência de dados no MongoDB.
 
 ---
 
 ## 📸 Demonstração
 
 
-
-https://github.com/user-attachments/assets/63a4085e-ef2a-475e-9cd9-0a9d015c04b8
-
+https://github.com/user-attachments/assets/284c8b1a-3f71-40c9-988e-298432c6f2f9
 
 
 ---
 
 ## 🛠️ Arquitetura do Sistema
 
-O projeto segue o padrão **BFF (Backend for Frontend)** simplificado:
-
-1.  **Frontend (Client):** O usuário interage com a interface. As requisições não vão direto para a API externa, mas sim para o nosso servidor local (`/api/last/...`).
-2.  **Backend (Node.js Proxy):**
-    * Recebe a requisição do Frontend.
-    * Injeta o Token de autenticação (se necessário) via variáveis de ambiente (`.env`).
-    * Consulta a **AwesomeAPI** e formata as chaves do JSON (ex: converte `USDBRL` para `USD-BRL`) para evitar erros no front.
-    * **Normaliza os dados:** Garante consistência na estrutura de retorno das moedas.
-3.  **Banco de Dados (MongoDB):** Armazena o histórico de conversões para persistência de dados além do navegador.
-4.  **API Externa:** Fonte da verdade dos dados financeiros.
+1.  **Frontend (Client):** Interface moderna desenvolvida em Vanilla JS. As requisições são enviadas ao nosso servidor local (`/api/last/...` e `/historico`), nunca expondo chaves ou lógica de banco de dados diretamente ao navegador.
+2.  **Backend (Node.js Proxy & API):**
+    * **Proxy:** Intermedia o contato com a **AwesomeAPI**, ocultando tokens e tratando CORS.
+    * **API Própria:** Gerencia as rotas de histórico (Salvar, Listar, Limpar) conectadas ao MongoDB.
+    * **Normalização:** Padroniza os dados recebidos antes de enviá-los ao front.
+3.  **Banco de Dados (MongoDB):** Armazena o log completo das conversões realizadas para consulta futura.
 
 ---
 
-## 🚀 Tecnologias e Conceitos Aplicados
+## 🚀 Funcionalidades
 
-### 🎨 Frontend (Interface & UX)
-Desenvolvido com **Vanilla JS** moderno, focando em performance e sem dependência de frameworks pesados.
+* **Conversão em Tempo Real:** Cotações atualizadas instantaneamente via integração com AwesomeAPI.
+* **Histórico Persistente:** Salva automaticamente cada conversão realizada no banco de dados.
+* **Gestão de Dados:** Interface dedicada (`historico.html`) para visualizar e limpar o histórico de consultas.
+* **Design Responsivo:** Interface adaptável com efeito *Glassmorphism* e gráficos interativos.
+* **Segurança:** Uso de variáveis de ambiente (`.env`) para proteger credenciais e configurações sensíveis.
 
-* **HTML5 Semântico:** Estrutura acessível e organizada.
-* **CSS3 Avançado:**
-    * **Glassmorphism:** Uso de `backdrop-filter: blur()` e transparências para visual moderno.
-    * **CSS Grid & Flexbox:** Para layouts responsivos e alinhamento do grid de moedas.
-    * **Animações:** `@keyframes` para suavizar a entrada de elementos.
-    * **Responsividade:** Menu Hambúrguer e adaptação total para mobile.
-* **JavaScript (ES6+):**
-    * **Debounce Pattern:** Otimização da barra de busca para reduzir chamadas excessivas.
-    * **Async/Await & Fetch:** Consumo assíncrono da API do Backend.
-    * **LocalStorage:** Persistência do histórico de conversões no navegador do usuário.
-    * **Chart.js:** Integração de biblioteca para renderização de gráficos interativos.
+---
 
-### ⚙️ Backend (Servidor & API)
-* **Node.js:** Ambiente de execução robusto para a aplicação.
-* **Express:** Framework para roteamento, criação do servidor HTTP e gerenciamento de rotas.
-* **MongoDB & Mongoose:** Banco de dados NoSQL e ODM para persistência do histórico de conversões.
-* **Node-fetch:** Implementação de requisições HTTP estáveis e com respostas consistentes.
-* **Organização do Projeto:**
-    * Estrutura limpa com diretório de `backups` dedicado.
-    * Configuração otimizada do `.gitignore` para manter o repositório organizado.
-* **Tratamento de Erros:**
-    * Blocos `try/catch` robustos para garantir que o servidor não pare.
-    * Tratamento detalhado para moedas inexistentes e falhas de comunicação com a API externa.
-* **Proxy Pattern:** Intermediação de requisições para ocultar tokens e tratar CORS.
+## 🧰 Tecnologias Utilizadas
+
+### Backend
+* **Node.js & Express:** Base do servidor e roteamento.
+* **MongoDB & Mongoose:** Banco de dados NoSQL e modelagem de dados (Schema).
+* **Node-fetch:** Cliente HTTP leve para requisições à API externa.
 * **Dotenv:** Gerenciamento seguro de variáveis de ambiente.
+* **Cors:** Controle de acesso HTTP.
+
+### Frontend
+* **HTML5 & CSS3:** Estrutura semântica e estilização avançada.
+* **Vanilla JavaScript (ES6+):** Lógica de interação limpa, sem dependência de frameworks pesados.
+* **Chart.js:** Biblioteca para renderização de gráficos de variação cambial.
+
+---
+
+## 📂 Estrutura do Projeto
+
+```text
+coinflux/
+├── backend/
+│   ├── config/
+│   │   └── db.js          # Conexão com o MongoDB
+│   ├── models/
+│   │   └── historico.js   # Modelo (Schema) do Mongoose
+│   ├── routes/
+│   │   └── historicoRoutes.js # Rotas da API de histórico
+│   └── server.js          # Ponto de entrada (Proxy + Servidor)
+├── frontend/
+│   ├── assets/
+│   │   ├── img/           # Ícones e imagens
+│   │   └── style.css      # Estilos globais
+│   ├── coin.js            # Lógica de conversão e gráficos
+│   ├── historico.html     # Página de visualização de logs
+│   ├── historico.js       # Lógica da página de histórico
+│   └── index.html         # Página principal
+├── backups/               # Diretório para backups de segurança
+├── .env                   # Variáveis de ambiente (ignorado pelo git)
+└── package.json           # Dependências e scripts
