@@ -18,9 +18,14 @@ const moedas = {
 
 // Função principal de cotação
 async function consultar() {
-  const moeda = document.getElementById("moedaSelect").value;
-  const valor = Number(document.getElementById("valorInput").value);
+  const moedaSelect = document.getElementById("moedaSelect");
+  const valorInput = document.getElementById("valorInput");
   const box = document.getElementById("resultado");
+
+  if (!moedaSelect || !valorInput) return;
+
+  const moeda = moedaSelect.value;
+  const valor = Number(valorInput.value);
 
   if (!valor || valor <= 0) {
     box.style.display = "block";
@@ -109,7 +114,7 @@ async function getCurrencyHistory(currency) {
 // Cria/atualiza o gráfico
 async function updateChart(currency) {
   const canvas = document.getElementById("currencyChart");
-  if (!canvas) return;
+  if (!canvas) return; // Se não tem canvas (página histórico), para aqui.
 
   const { labels, values } = await getCurrencyHistory(currency);
   const ctx = canvas.getContext("2d");
@@ -192,6 +197,9 @@ async function displayCurrencies() {
 function searchCurrency() {
   const searchInput = document.getElementById('searchInput');
   const resultsDiv = document.getElementById('searchResults');
+  
+  if (!searchInput) return;
+
   const searchTerm = searchInput.value.toLowerCase();
 
   if (!searchTerm) {
@@ -211,9 +219,14 @@ function searchCurrency() {
 }
 
 function selectCurrency(code) {
-  document.getElementById('moedaSelect').value = code;
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchResults').innerHTML = '';
+  const moedaSelect = document.getElementById('moedaSelect');
+  const searchInput = document.getElementById('searchInput');
+  const resultsDiv = document.getElementById('searchResults');
+
+  if (moedaSelect) moedaSelect.value = code;
+  if (searchInput) searchInput.value = '';
+  if (resultsDiv) resultsDiv.innerHTML = '';
+  
   updateChart(code);
 }
 
@@ -264,40 +277,41 @@ function debounce(fn, ms = 200) {
 // Menu hambúrguer
 function toggleMenu() {
   const menu = document.getElementById("sideMenu");
-  menu.classList.toggle("open");
+  if (menu) menu.classList.toggle("open");
 }
 
-// Gráfico carrega automaticamente ao abrir a página
+// Gráfico carrega automaticamente ao abrir a página (COM CORREÇÃO)
 window.addEventListener("DOMContentLoaded", () => {
-  const moeda = document.getElementById("moedaSelect").value;
-  updateChart(moeda);
+  const selectElement = document.getElementById("moedaSelect");
+  // Só tenta atualizar se o elemento existir
+  if (selectElement) {
+    updateChart(selectElement.value);
+  }
 });
 
-function toggleMenu() {
-  const menu = document.getElementById("sideMenu");
-  menu.classList.toggle("open");
-}
-// Event Listeners
+// Event Listeners Principais
 document.addEventListener('DOMContentLoaded', () => {
-  // Index
+  // Index - Botão Consultar
   const btnConsultar = document.getElementById("btnConsultar");
   if (btnConsultar) {
     btnConsultar.addEventListener("click", consultar);
   }
 
+  // Index - Select de Moeda
   const moedaSelect = document.getElementById("moedaSelect");
   if (moedaSelect) {
     moedaSelect.addEventListener("change", debounce((e) => {
       updateChart(e.target.value);
     }, 250));
-    updateChart(moedaSelect.value);
   }
 
+  // Barra de Pesquisa
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.addEventListener('input', debounce(searchCurrency, 200));
   }
 
+  // Fecha busca ao clicar fora
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.search-box')) {
       const resultsDiv = document.getElementById('searchResults');
@@ -305,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Histórico
+  // Histórico - Botão Limpar
   const btnLimpar = document.getElementById('btnLimpar');
   if (btnLimpar) {
     btnLimpar.addEventListener('click', () => {
@@ -316,8 +330,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Inicializações Globais
   displayHistorico();
   displayCurrencies();
   
+  // Atualiza cotações do grid a cada 30 segundos
   setInterval(displayCurrencies, 30000);
 });
