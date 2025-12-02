@@ -10,11 +10,7 @@ O diferencial deste projeto é sua arquitetura **Full Stack**. Diferente de simp
 
 ## 📸 Demonstração
 
-![Preview da Aplicação](https://via.placeholder.com/800x400?text=Inserir+Print+da+Tela+Aqui)
-
-*(Substitua o link acima por um print real da sua tela ou um GIF do funcionamento)*
-
----
+---![COINFLUX](https://github.com/user-attachments/assets/4811fd2a-7d3b-4fcc-a6c9-cdbe8c5cfbd8)
 
 ## 🛠️ Arquitetura do Sistema
 
