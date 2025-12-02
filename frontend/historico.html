@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Histórico de Conversões</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav-bar">
+  <div class="logo">
+    <span>Coin</span> Flux
+  </div>
+
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="index.html">🏠 Início</a></li>
+      <li><a href="historico.html">📊 Histórico</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h1>📊 Histórico de Conversões</h1>
+    
+    <div class="history-controls">
+      <button id="btnLimpar" class="btn btn-danger">🗑️ Limpar Histórico</button>
+    </div>
+
+    <div id="historico" class="historico-list"></div>
+    <div id="vazio" class="vazio-msg" style="display: none; text-align: center; padding: 40px; color: #999;">
+      <p style="font-size: 18px;">📭 Nenhuma conversão realizada ainda</p>
+    </div>
+  </div>
+</div>
+
+<script src="coin.js"></script>
+</body>
+</html>
