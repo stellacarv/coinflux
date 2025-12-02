@@ -10,7 +10,8 @@ O diferencial deste projeto é sua arquitetura **Full Stack**. Diferente de simp
 
 ## 📸 Demonstração
 
-![COINFLUX](https://github.com/user-attachments/assets/4811fd2a-7d3b-4fcc-a6c9-cdbe8c5cfbd8)
+
+https://github.com/user-attachments/assets/63a3b525-8c5e-47e9-858c-90f67a6cda40
 
 ---
 
@@ -22,9 +23,10 @@ O projeto segue o padrão **BFF (Backend for Frontend)** simplificado:
 2.  **Backend (Node.js Proxy):**
     * Recebe a requisição do Frontend.
     * Injeta o Token de autenticação (se necessário) via variáveis de ambiente (`.env`).
-    * Consulta a **AwesomeAPI**.
-    * **Normaliza os dados:** Padroniza as chaves do JSON (ex: converte `USDBRL` para `USD-BRL`) para evitar erros no front.
-3.  **API Externa:** Fonte da verdade dos dados financeiros.
+    * Consulta a **AwesomeAPI** e formata as chaves do JSON (ex: converte `USDBRL` para `USD-BRL`) para evitar erros no front.
+    * **Normaliza os dados:** Garante consistência na estrutura de retorno das moedas.
+3.  **Banco de Dados (MongoDB):** Armazena o histórico de conversões para persistência de dados além do navegador.
+4.  **API Externa:** Fonte da verdade dos dados financeiros.
 
 ---
 
@@ -46,10 +48,15 @@ Desenvolvido com **Vanilla JS** moderno, focando em performance e sem dependênc
     * **Chart.js:** Integração de biblioteca para renderização de gráficos interativos.
 
 ### ⚙️ Backend (Servidor & API)
-* **Node.js:** Ambiente de execução.
-* **Express:** Framework para roteamento e criação do servidor HTTP.
+* **Node.js:** Ambiente de execução robusto para a aplicação.
+* **Express:** Framework para roteamento, criação do servidor HTTP e gerenciamento de rotas.
+* **MongoDB & Mongoose:** Banco de dados NoSQL e ODM para persistência do histórico de conversões.
+* **Node-fetch:** Implementação de requisições HTTP estáveis e com respostas consistentes.
+* **Organização do Projeto:**
+    * Estrutura limpa com diretório de `backups` dedicado.
+    * Configuração otimizada do `.gitignore` para manter o repositório organizado.
+* **Tratamento de Erros:**
+    * Blocos `try/catch` robustos para garantir que o servidor não pare.
+    * Tratamento detalhado para moedas inexistentes e falhas de comunicação com a API externa.
 * **Proxy Pattern:** Intermediação de requisições para ocultar tokens e tratar CORS.
 * **Dotenv:** Gerenciamento seguro de variáveis de ambiente.
-* **Tratamento de Erros:** Blocos `try/catch` robustos para garantir que o servidor não pare em caso de falha da API externa.
-
-
