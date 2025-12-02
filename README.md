@@ -7,10 +7,7 @@ O **CoinFlux** é uma aplicação web Full Stack que permite aos usuários consu
 ---
 
 ## 📸 Demonstração
-
-![Screenshot da Aplicação](https://via.placeholder.com/800x400?text=Inserir+Print+da+Tela+Aqui)
-
-*(Substitua o link acima por uma imagem real do seu projeto)*
+<img width="1280" height="632" alt="image" src="https://github.com/user-attachments/assets/6062750e-2087-40ca-94e9-d1a2e92edb55" />
 
 ---
 
@@ -28,16 +25,14 @@ O projeto segue uma arquitetura cliente-servidor robusta:
 ## 🚀 Tecnologias Utilizadas
 
 ### Frontend
-* **[Inserir: React / Vue / HTML&CSS]**
-* **[Inserir: Axios / Fetch]**
-* **[Inserir: CSS Framework]**
+* **React / HTML&CSS**
 
 ### Backend
-* **[Inserir: Node.js / Python / Java]**
+* **Node.js**
 * **API RESTful**
 
 ### Banco de Dados
-* **[Inserir: PostgreSQL / MySQL / MongoDB]**
+* **MongoDB**
 
 ### Integrações
 * **API de Câmbio:** [AwesomeAPI / OpenExchangeRates]
@@ -65,16 +60,3 @@ Exemplo da tabela principal de cotações:
 | `data_consulta` | TIMESTAMP | Data e hora da requisição |
 
 ---
-
-## 🔧 Como Executar o Projeto
-
-### Pré-requisitos
-* [Git](https://git-scm.com)
-* [Node.js](https://nodejs.org/en/) (ou a linguagem do seu backend)
-* Banco de Dados configurado
-
-### Passo 1: Clonar o repositório
-
-```bash
-git clone [https://github.com/seu-usuario/coinflux.git](https://github.com/seu-usuario/coinflux.git)
-cd coinflux
