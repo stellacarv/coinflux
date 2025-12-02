@@ -11,7 +11,10 @@ O diferencial deste projeto é sua arquitetura **Full Stack**. Diferente de simp
 ## 📸 Demonstração
 
 
-https://github.com/user-attachments/assets/63a3b525-8c5e-47e9-858c-90f67a6cda40
+
+https://github.com/user-attachments/assets/63a4085e-ef2a-475e-9cd9-0a9d015c04b8
+
+
 
 ---
 
