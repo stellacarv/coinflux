@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Histórico de Conversões</title>
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/flat-round/64/cheap-2--v1.png">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -37,8 +37,15 @@
     </div>
 
     <div id="historico" class="historico-list"></div>
+    
+    <div id="vazio" class="vazio-msg" style="display: none; text-align: center; padding: 40px; color: #999;">
+      <p style="font-size: 18px;">📭 Nenhuma conversão realizada ainda</p>
+    </div>
+  </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="coin.js"></script>
+
 </body>
 </html>
