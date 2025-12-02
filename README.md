@@ -49,4 +49,24 @@ Desenvolvido com **Vanilla JS** moderno, focando em performance e sem dependênc
 
 ### ⚙️ Backend (Servidor & API)
 * **Node.js:** Ambiente de execução.
-* **Express:** Framework para roteamento e criação do
+* **Express:** Framework para roteamento e criação do servidor HTTP.
+* **Proxy Pattern:** Intermediação de requisições para ocultar tokens e tratar CORS.
+* **Dotenv:** Gerenciamento seguro de variáveis de ambiente.
+* **Tratamento de Erros:** Blocos `try/catch` robustos para garantir que o servidor não pare em caso de falha da API externa.
+
+---
+
+## 📂 Estrutura de Pastas
+
+```text
+/
+├── frontend/           # Arquivos estáticos servidos pelo Express
+│   ├── assets/
+│   │   └── style.css   # Estilização global
+│   ├── coin.js         # Lógica do cliente
+│   ├── index.html      # Dashboard principal
+│   └── historico.html  # Página de histórico
+├── .env                # Variáveis de ambiente (Token e Porta)
+├── server.js           # Servidor Node.js (Proxy API)
+├── package.json        # Gerenciamento de dependências
+└── README.md           # Documentação
