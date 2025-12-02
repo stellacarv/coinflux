@@ -22,14 +22,9 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-<<<<<<< HEAD
     "express": "^5.2.1",
     "mongodb": "^6.21.0",
     "mongoose": "^8.20.1",
-=======
-    "express": "^5.1.0",
-    "mongoose": "^9.0.0",
->>>>>>> 4504be603cacbb9f722035375c409fe857eaeb1b
     "node-fetch": "^2.7.0"
   }
 }
