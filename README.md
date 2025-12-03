@@ -76,3 +76,61 @@ coinflux/
 ├── backups/               # Diretório para backups de segurança
 ├── .env                   # Variáveis de ambiente (ignorado pelo git)
 └── package.json           # Dependências e scripts
+```
+
+## ⚙️ Instalação e Configuração
+
+### Pré-requisitos
+* Node.js instalado.
+* MongoDB rodando (localmente ou via Atlas).
+
+### Passo a Passo
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/stellacarv/coinflux.git](https://github.com/stellacarv/coinflux.git)
+    cd coinflux
+    ```
+
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure o ambiente:**
+    Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+    ```env
+    PORT=3000
+    MONGO_URI=mongodb://localhost:27017/coinflux
+    AWESOME_TOKEN=seu_token_aqui  # Opcional, mas recomendado para evitar limites da API
+    ```
+
+4.  **Inicie o servidor:**
+    ```bash
+    npm start
+    ```
+    O servidor rodará em `http://localhost:3000`.
+
+---
+
+## 🔌 Documentação da API Interna
+
+### 1. Cotação (Proxy)
+* **GET** `/api/last/:pairs`
+    * Busca a cotação atual para os pares informados (ex: `USD-BRL,EUR-BRL`).
+    * Retorna JSON normalizado.
+
+### 2. Histórico
+* **POST** `/historico`
+    * Salva uma nova conversão.
+    * **Body:** `{ "moedaOrigem": "USD", "moedaDestino": "BRL", "valor": 5.50 }`
+* **GET** `/historico`
+    * Retorna a lista das últimas conversões salvas.
+* **DELETE** `/historico`
+    * Apaga todo o histórico do banco de dados.
+
+---
+
+## 📝 Licença
+
+Este projeto está sob a licença **ISC**.
